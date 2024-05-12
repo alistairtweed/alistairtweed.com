@@ -1,6 +1,7 @@
-const path = require("path")
+import path from "path"
+import vue from "@vitejs/plugin-vue"
 
-module.exports = {
+export default {
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src")
@@ -8,5 +9,8 @@ module.exports = {
   },
   server: {
     port: 3000
-  }
+  },
+  plugins: [
+    vue()
+  ]
 }
