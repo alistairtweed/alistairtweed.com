@@ -21,7 +21,7 @@
 <template>
   <div class="container py-4">
     <div class="flex justify-between">
-      <div>
+      <div v-if="!$route.path.includes('timer')">
         <router-link class="font-bold" to="/">Alistair Tweed</router-link>
       </div>
       <div v-if="store.currentUser">
