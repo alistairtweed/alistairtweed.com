@@ -19,9 +19,9 @@
 </script>
 
 <template>
-  <div class="container py-4">
+  <div class="container py-4" v-if="!$route.path.includes('timer')">
     <div class="flex justify-between">
-      <div v-if="!$route.path.includes('timer')">
+      <div>
         <router-link class="font-bold" to="/">Alistair Tweed</router-link>
       </div>
       <div v-if="store.currentUser">

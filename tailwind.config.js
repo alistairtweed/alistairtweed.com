@@ -12,6 +12,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Roboto", ...defaultTheme.fontFamily.sans]
+      },
+      screens: {
+        "3xl": "2000px"
       }
     }
   },
