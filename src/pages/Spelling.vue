@@ -1,5 +1,6 @@
 <script setup>
   import { ref, onMounted } from "vue"
+  import confetti from "https://cdn.skypack.dev/canvas-confetti"
 
   const vowels = ref(["a", "e", "i", "o", "u"])
   const words = ref([])
@@ -7,10 +8,13 @@
   const currentVowel = ref(null)
   const guesses = ref([])
   const guessed = ref(false)
+  const showAnswer = ref(false)
 
   function startOver() {
     guesses.value = []
     guessed.value = false
+    showAnswer.value = false
+
     currentWord.value = words.value[Math.floor(Math.random() * words.value.length)]
 
     const wordVowels = currentWord.value.split("").map((letter, index) => {
@@ -23,16 +27,19 @@
   }
 
   function guess(vowel) {
-    console.log("guess")
+    if (showAnswer.value) return
+
     if (vowel === currentVowel.value.letter) {
       guessed.value = true
+      showAnswer.value = true
+      confetti()
     } else {
       guesses.value.push(vowel)
     }
   }
 
   function revealAnswer() {
-    guessed.value = true
+    showAnswer.value = true
   }
 
   async function fetchWords() {
@@ -52,13 +59,13 @@
     <div class="mt-24 mb-12">
       <div class="text-5xl font-bold text-center" v-if="currentWord">
         <span v-for="(letter, index) in currentWord" :key="index">
-          <span v-if="currentVowel && currentVowel.index === index" class="Blank" :class="{ '--correct': guessed }">{{ letter }}</span>
+          <span v-if="currentVowel && currentVowel.index === index" class="Blank" :class="{ '--correct': showAnswer }">{{ letter }}</span>
           <span v-else>{{ letter }}</span>
         </span>
       </div>
     </div>
     <div class="grid grid-cols-5 gap-2">
-      <div class="Vowel" v-for="vowel in vowels" :key="vowel" @click="guess(vowel)" :class="{ '--incorrect': guesses.includes(vowel), '--correct': guessed && vowel === currentVowel.letter }">{{ vowel }}</div>
+      <div class="Vowel" v-for="vowel in vowels" :key="vowel" @click="guess(vowel)" :class="{ '--incorrect': guesses.includes(vowel), '--correct': showAnswer && vowel === currentVowel.letter }">{{ vowel }}</div>
     </div>
     <div class="mt-4 flex items-center justify-center space-x-2">
       <div class="Button" @click="revealAnswer">Reveal</div>
