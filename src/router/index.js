@@ -2,21 +2,19 @@ import { createRouter, createWebHistory } from "vue-router"
 
 import api from "~/api"
 
-import HomePage from "~/pages/HomePage.vue"
-import SignInPage from "~/pages/SignInPage.vue"
-import TimerPage from "~/pages/TimerPage.vue"
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", component: HomePage },
-    { path: "/sign-in", component: SignInPage },
-    { path: "/timer", component: TimerPage }
+    { path: "/", component: () => import("~/pages/Home.vue") },
+    { path: "/calculator", component: () => import("~/pages/Calculator.vue") },
+    { path: "/sign-in", component: () => import("~/pages/SignIn.vue") },
+    { path: "/timer", component: () => import("~/pages/Timer.vue") },
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const publicPages = [
+    "/calculator",
     "/sign-in",
     "/timer"
   ]

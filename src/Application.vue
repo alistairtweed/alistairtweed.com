@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <div class="container py-4" v-if="!$route.path.includes('timer')">
+  <div class="container py-4" v-if="!$route.path.includes('timer') && !$route.path.includes('calculator')">
     <div class="flex justify-between">
       <div>
         <router-link class="font-bold" to="/">Alistair Tweed</router-link>
