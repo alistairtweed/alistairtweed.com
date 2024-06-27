@@ -58,10 +58,18 @@
   <div class="mx-auto flex max-w-md flex-col items-center px-6">
     <div class="mt-24 mb-12">
       <div class="text-5xl font-bold text-center" v-if="currentWord">
-        <span v-for="(letter, index) in currentWord" :key="index">
-          <span v-if="currentVowel && currentVowel.index === index" class="Blank" :class="{ '--correct': showAnswer }">{{ letter }}</span>
-          <span v-else>{{ letter }}</span>
-        </span>
+        <a :href="'https://www.oxfordlearnersdictionaries.com/search/english/?q=' + currentWord" target="_blank" v-if="showAnswer">
+          <span v-for="(letter, index) in currentWord" :key="index">
+            <span v-if="currentVowel && currentVowel.index === index" class="Blank --correct">{{ letter }}</span>
+            <span v-else>{{ letter }}</span>
+          </span>
+        </a>
+        <template v-else>
+          <span v-for="(letter, index) in currentWord" :key="index">
+            <span v-if="currentVowel && currentVowel.index === index" class="Blank">{{ letter }}</span>
+            <span v-else>{{ letter }}</span>
+          </span>
+        </template>
       </div>
     </div>
     <div class="grid grid-cols-5 gap-2">
