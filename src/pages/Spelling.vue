@@ -17,11 +17,21 @@
 
     currentWord.value = words.value[Math.floor(Math.random() * words.value.length)]
 
+    if (currentWord.value.length < 6) {
+      startOver()
+      return
+    }
+
     const wordVowels = currentWord.value.split("").map((letter, index) => {
       if (vowels.value.includes(letter)) {
         return { letter, index }
       }
     }).filter(Boolean)
+
+    if (wordVowels.length < 2) {
+      startOver()
+      return
+    }
 
     currentVowel.value = wordVowels[Math.floor(Math.random() * wordVowels.length)]
   }
@@ -43,7 +53,7 @@
   }
 
   async function fetchWords() {
-    const response = await fetch("/words.txt")
+    const response = await fetch("/words_academic.txt")
     const text = await response.text()
     words.value = text.trim().split("\n")
   }
